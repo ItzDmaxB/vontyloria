@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talman | Vontyloria</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <center>
+            <a href="/index.html">
+                <button class="nav-logo-button">
+                    <img src="Vontyloria full logo.png" class="nav-logo-img">
+                </button>
+            </a>
+        </center>
+    </nav>
+
+    <div class="homepage">
+        <div class="val-options">
+        <h1>Riksval</h1>
+        <a href="https://docs.google.com/forms/d/1oIe-WBUJXwQmRP3ULTabr1QhhPhCNOeWKLCAxYvOisg/edit" target="_blank">Öppna Google formuläret</a>
+        <div class="buttons">
+            <button id="valOn" class="val-btn">på</button>
+            <button id="valOff" class="val-btn">av</button>
+        </div>
+        </div>
+    </div>
+
+    <script type="module">
+    import {
+      onAuthChange,
+      logoutUser,
+      getUserData,
+      getContentData,
+      hasSiteAccess
+    } from './js/auth.js';
+    import {
+        doc,
+        updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { db } from './js/firebase-config.js';
+
+    onAuthChange(async user => {
+      const data = await getUserData(user.uid);
+      if (data.regering !== "talman") {
+        window.location.href = '/regering.html';
+        return;
+      }
+    });
+
+    const setValValue = doc(db, "content", "val");
+
+    document.getElementById("valOn").addEventListener("click", async () => {
+        
+
+        await updateDoc(setValValue, {
+            aktiv: true
+        });
+        window.alert("Röstning för Riksval är nu igång 🟢");
+    })
+
+    document.getElementById("valOff").addEventListener("click", async () => {    
+        await updateDoc(setValValue, {
+          aktiv: false
+        });
+        window.alert("Röstning för Riksval är nu avstängt 🔴");
+    });
+  </script>
+</body>
+</html>

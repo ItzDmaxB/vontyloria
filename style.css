@@ -1,0 +1,539 @@
+:root {
+    --text-main: #000000;
+    --text-secondary: #333333;
+    --text-white: #ffffff;
+    --accent-color: #4A4BF7;
+    --primary-color: #F0F8FF;
+    --secondary-color: #d8edff;
+    --disclaimer-color: #F74A4A;
+    --success-color: #4AF76A;
+}
+
+@font-face {
+    font-family: Satoshi Black;
+    src: url(Satoshi-Black.woff);
+}
+@font-face {
+    font-family: Satoshi Medium;
+    src: url(Satoshi-Medium.woff);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    background-color: aliceblue;
+    position: relative;
+}
+
+.nav-logo-button {
+    border: 0;
+    background-color: transparent;
+
+    cursor: pointer;
+}
+
+.nav-logo-img {
+    width: 300px;
+    height: auto;
+}
+
+.homepage {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.val {
+    background-color: aliceblue;
+    position: relative;
+    padding: 2rem;
+
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    top: 1rem;
+
+    border-radius: 24px;
+
+}
+.val h1 {
+    display: flex;
+    text-wrap: wrap;
+
+    font-family: Satoshi Black;
+    color: var(--text-main);
+}
+.val p {
+    display: flex;
+    text-wrap: wrap;
+
+    font-family: Satoshi Medium;
+    color: var(--text-secondary);
+}
+
+.vote-btn {
+    background-color: var(--accent-color);
+    border: 0;
+    border-radius: 1000px;
+
+    width: 10rem;
+    height: 3rem;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+.account-hero {
+    background-color: aliceblue;
+    top: 5vh;
+    border-radius: 24px;
+
+    position: relative;
+
+    width: 20rem;
+    height: 20rem;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.welcome-text {
+    font-size: 20px;
+}
+
+.nav-member-btn {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text-secondary);
+    background-color: var(--secondary-color);
+
+    border-radius: 16px;
+}
+.nav-mc-head {
+    height: 40px;
+    width: 40px;
+    border-radius: 8px;
+}
+
+.hero-login-text {
+    font-family: Satoshi Medium;
+    font-size: 150%;
+}
+
+.nav-login-btn {
+    background-color: var(--accent-color);
+    border: 0;
+    border-radius: 1000px;
+
+    width: 10rem;
+    height: 3rem;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+
+/* Login */
+.center-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.card {
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  background-color: aliceblue;
+  border-radius: 24px;
+  position: relative;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-main);
+  font-family: Satoshi Medium;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.1rem;
+}
+
+input {
+  padding: 1rem 1rem;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  border: transparent;
+  color: var(--text-secondary);
+  font-family: Satoshi Medium;
+  font-size: 1.5rem;
+  outline: none;
+}
+input:focus { border-color: var(--accent); }
+
+form button {
+  max-width: 250px;
+  margin: 0 auto;
+}
+form button p {
+  font-size: 1.5rem;
+}
+
+.error-msg {
+  color: var(--disclaimer-color);
+
+  font-family: Satoshi Black;
+  font-size: 1rem;
+  min-height: 1.2rem;
+}
+
+.big-login-button {
+  display: inline-block;
+  padding: 0rem 1.4rem;
+  background: var(--accent-color);
+  border-radius: 100px;
+  color: var(--text-white);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: Satoshi Black;
+  transition: opacity 0.18s, transform 0.12s;
+  width: 100%;
+  text-align: center;
+}
+
+/* Logged in */
+
+.page {
+    width: 90%;
+
+    position: relative;
+    top: 1rem;
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    padding-bottom: 1rem;
+}
+
+.option-card {
+    width: 20rem;
+    height: 25rem;
+    background-color: aliceblue;
+
+    border-radius: 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+}
+.option-title {
+    font-family: Satoshi Black;
+    color: var(--text-main);
+
+    width: 15rem;
+    font-size: 2.2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.option-desc {
+    font-family: Satoshi Medium;
+    color: var(--text-secondary);
+    font-size: 1.3rem;
+    width: 15rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.option-button {
+    border: 0;
+    padding: 0.7rem 4rem;
+    border-radius: 100px;
+    background-color: var(--accent-color);
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+
+#logout-btn {
+    background-color: var(--disclaimer-color);
+    border: 0;
+    border-radius: 1000px;
+
+    width: 10rem;
+    height: 3rem;
+    top: 1rem;
+    position: relative;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+.unavailable {
+    background-color: var(--secondary-color);
+}
+
+/* clientVote */
+
+.voting-box {
+    background-color: aliceblue;
+    padding: 3rem;
+    border-radius: 24px;
+    gap: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#proposition {
+    font-family: Satoshi Medium;
+    text-wrap: wrap;
+    text-align: center;
+    position: relative;
+}
+
+.voting-btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+.voting-btn {
+    border: 0;
+    padding: 0.7rem 4rem;
+    border-radius: 100px;
+
+    color: var(--text-white);
+    background-color: var(--accent-color);
+    font-family: Satoshi Black;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+/* hostVote */
+
+.content-hostvote {
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.hostvote-title {
+    font-family: Satoshi black;
+    text-align: center;
+}
+
+#proposition-input {
+    border: 0;
+    padding: 0.7rem 4rem;
+    border-radius: 100px;
+
+    background-color: var(--secondary-color);
+    color: var(--text-main);
+
+    resize: none;
+    text-align: center;
+    display: flex;
+    font-family: Satoshi Black;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+#option1-input {
+    resize: none;
+    text-align: center;
+    display: flex;
+}
+#option2-input {
+    resize: none;
+    text-align: center;
+    display: flex;
+}
+
+#save-btn {
+    background-color: var(--success-color);
+    border: 0;
+    border-radius: 1000px;
+
+    width: 10rem;
+    height: 3rem;
+    top: 1rem;
+    position: relative;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+.results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.result p {
+    font-family: Satoshi Medium;
+    color: var(--text-secondary);
+}
+.result h1 {
+    font-family: Satoshi Black;
+    color: var(--text-main);
+}
+
+.vote-count {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.vote-count p {
+    font-family: Satoshi Medium;
+    color: var(--text-secondary);
+    text-align: center;
+}
+.vote-count h1 {
+    font-family: Satoshi Black;
+    color: var(--text-main);
+    text-align: center;
+}
+
+#clear-vote {
+    background-color: var(--disclaimer-color);
+    border: 0;
+    border-radius: 1000px;
+
+    width: 10rem;
+    height: 3rem;
+    top: 1rem;
+    position: relative;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+
+/* Talmanpanelen */
+
+.val-options {
+    background-color: var(--primary-color);
+    top: 1rem;
+    gap: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    align-items: center;
+    border-radius: 24px;
+}
+.val-options h1 {
+    font-family: Satoshi Black;
+    color: var(--text-main);
+}
+.val-options a {
+    font-family: Satoshi Medium;
+    color: var(--text-secondary);
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.val-btn {
+    border: 0;
+    padding: 0.7rem 4rem;
+    border-radius: 100px;
+
+    color: var(--text-white);
+    font-family: Satoshi Black;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+#valOn {
+    background-color: var(--success-color);
+}
+#valOff {
+    background-color: var(--disclaimer-color);
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[HOST] Regeringsmöte | Vontyloria</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <center>
+            <a href="/index.html">
+                <button class="nav-logo-button">
+                    <img src="Vontyloria full logo.png" class="nav-logo-img">
+                </button>
+            </a>
+        </center>
+    </nav>
+    
+    <div class="homepage">
+        <div class="content-hostvote">
+            <div class="voting-box">
+                <h1 class="hostvote-title">Redigera röstning</h1>
+                <textarea name="proposition-input" rows="0.5" cols="7" id="proposition-input">Proposition</textarea>
+                <div class="voting-btns">
+                    <textarea name="option1-input" rows="0.5" cols="7" id="option1-input" class="voting-btn">Option 1</textarea>
+                    <textarea name="option2-input" rows="0.5" cols="7" id="option2-input" class="voting-btn">Option 2</textarea>
+                </div>
+                <button id="save-btn">Spara</button>
+            </div>
+            <div class="voting-box">
+                <h1 class="hostvote-title">Resultat</h1>
+                <div class="results">
+                    <div class="result">
+                        <p id="option1">Laddar...</p>
+                        <h1 id="option1result">Laddar...</h1>
+                    </div>
+                    <div class="result">
+                        <p id="option2">Laddar...</p>
+                        <h1 id="option2result">Laddar...</h1>
+                    </div>
+                </div>
+                <div class="vote-count">
+                    <p>Totala röster</p>
+                    <h1 id="vote-count">Laddar...</h1>
+                </div>
+                <button id="clear-vote">Rensa</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+    import {
+      onAuthChange,
+      logoutUser,
+      getUserData,
+      getContentData,
+      hasSiteAccess
+    } from './js/auth.js';
+    import {
+        doc,
+        updateDoc,
+        getDoc,
+        setDoc,
+        getDocs,
+        collection,
+        writeBatch,
+        onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { db } from './js/firebase-config.js';
+
+    let userData = null;
+    let userUID = null;
+
+    let option1content = null;
+    let option2content = null;
+ 
+    onAuthChange(async user => {
+        const userRef = doc(db, "users", user.uid);
+
+        onSnapshot(userRef, snap => {
+            if (snap.exists()) {
+                userData = snap.data();
+                userUID = user.uid;
+            }
+
+            if (userData.regering !== "true" && userData.regering !== "talman") {
+                window.location.href = '/login.html';
+            }
+        })
+    });
+
+    const option1 = document.getElementById('option1-input');
+    const option2 = document.getElementById('option2-input');
+    const proposition = document.getElementById('proposition-input');
+    const voteSessionRef = doc(db, "content", "voteSession");
+
+      
+
+    onSnapshot(voteSessionRef, snap => {
+        if (snap.exists()) {
+            option1.value = snap.data().option1;
+            option2.value = snap.data().option2;
+            proposition.value = snap.data().proposition;
+
+            document.getElementById('option1').textContent = snap.data().option1;
+            document.getElementById('option2').textContent = snap.data().option2;
+
+            document.getElementById('option1result').textContent = snap.data().option1result;
+            document.getElementById('option2result').textContent = snap.data().option2result;
+            document.getElementById('vote-count').textContent = snap.data().votes;
+        }
+    });
+
+    document.getElementById('save-btn').addEventListener('click', async () => {
+        console.log("hello world");
+        await updateDoc(voteSessionRef, {
+            option1: option1.value,
+            option2: option2.value,
+            proposition: proposition.value,
+        });    
+        console.log("hello world success");
+    });
+
+    document.getElementById('clear-vote').addEventListener('click', async () => {
+
+        const usersSnapshot = await getDocs(collection(db, "users"));
+
+        await updateDoc(voteSessionRef, {
+            option1result: 0,
+            option2result: 0,
+            votes: 0,
+        });
+
+        usersSnapshot.forEach(userDoc => {
+            updateDoc(userDoc.ref, {
+                voted: false,
+            });
+        });
+    });
+    
+    // User is admin — show the panel
+    // const snap = await getDoc(voteSessionRef);
+    // if (snap.exists()) {
+    //     document.getElementById('proposition-input').value = snap.data().proposition;
+    // }
+
+    // document.getElementById('save-btn').addEventListener('click', async () => {
+    //     const text = document.getElementById('senastenytt-input').value;
+    //     await setDoc(ref, { text });
+    //     document.getElementById('save-status').textContent = '✅ Saved!';
+    //     setTimeout(() => document.getElementById('save-status').textContent = '', 2000);
+    // });
+  </script>
+</body>
+</html>

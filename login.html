@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vontyloria | Logga in</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body style="display: flex; justify-content: center;">
+
+  <nav>
+        <center>
+            <a href="/index.html">
+                <button class="nav-logo-button">
+                    <img src="Vontyloria full logo.png" class="nav-logo-img">
+                </button>
+            </a>
+        </center>
+    </nav>
+
+  <main class="center-page">
+    <div class="card">
+      <form id="login-form">
+        <label>Epost
+          <input type="email" id="email" required placeholder="görgen@mc23.com"/>
+        </label>
+        <label>Lösenord
+          <input type="password" id="password" required placeholder="••••••••" style="letter-spacing: 0.3rem;"/>
+        </label>
+        <p id="error-msg" class="error-msg"></p>
+        <button type="submit" class="big-login-button"><p>Logga in</p></button>
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module">
+    import {
+      loginUser,
+      onAuthChange,
+      hasSiteAccess
+    } from './js/auth.js';
+
+    // Redirect already logged-in users
+    onAuthChange(async user => {
+      if (!user) return;
+
+      const allowed = await hasSiteAccess(user.uid);
+
+      if (allowed) {
+        window.location.href = '/regering.html';
+      } else {
+        await import('./js/auth.js').then(({ logoutUser }) => logoutUser());
+
+        document.getElementById('error-msg').textContent =
+          'Ditt konto har inte tillgång till sidan';
+      }
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errEl = document.getElementById('error-msg');
+
+      errEl.textContent = '';
+
+      try {
+        const credential = await loginUser(email, password);
+
+        const allowed = await hasSiteAccess(credential.user.uid);
+
+        if (!allowed) {
+          const { logoutUser } = await import('./js/auth.js');
+          await logoutUser();
+
+          errEl.textContent = 'Ditt konto har inte tillgång till sidan';
+          return;
+        }
+
+        window.location.href = '/regering.html';
+
+      } catch (err) {
+        errEl.textContent = 'Fel epost eller lösenord';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regeringsmöte | Vontyloria</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <center>
+            <a href="/index.html">
+                <button class="nav-logo-button">
+                    <img src="Vontyloria full logo.png" class="nav-logo-img">
+                </button>
+            </a>
+        </center>
+    </nav>
+
+    <div class="homepage">
+        <div class="voting-box">
+            <h1 id="proposition">Laddar...</h1>
+            <div class="voting-btns">
+                <button class="voting-btn" id="option1">option1</button>
+                <button class="voting-btn" id="option2">option2</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/auth.js"></script>
+    <script type="module">
+      import {
+        onAuthChange,
+        logoutUser,
+        getUserData,
+        getContentData,
+        hasSiteAccess
+      } from './js/auth.js';
+      import {
+        doc,
+        updateDoc,
+        increment,
+        onSnapshot
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      import { db } from './js/firebase-config.js';
+
+      let userData = null;
+      let userUID = null;
+
+      let option1content = null;
+      let option2content = null;
+ 
+      onAuthChange(async user => {
+        const userRef = doc(db, "users", user.uid);
+
+        onSnapshot(userRef, snap => {
+            if (snap.exists()) {
+                userData = snap.data();
+                userUID = user.uid;
+            }
+
+            if (userData.regering !== "true" && userData.regering !== "talman") {
+                window.location.href = '/login.html';
+            }
+        })
+      });
+
+      const option1 = document.getElementById('option1');
+      const option2 = document.getElementById('option2');
+      const voteSessionRef = doc(db, "content", "voteSession");
+
+      
+
+      onSnapshot(voteSessionRef, snap => {
+        if (snap.exists()) {
+          document.getElementById('option1').textContent = snap.data().option1;
+          option1content = snap.data().option1
+          document.getElementById('option2').textContent = snap.data().option2;
+          option2content = snap.data().option2
+          document.getElementById('proposition').textContent = snap.data().proposition;
+        }
+      });
+
+      option1.addEventListener("click", async () => {
+        if (userData.voted === false) {
+          await updateDoc(voteSessionRef, {
+            option1result: increment(userData.voteValue),
+          });
+          await updateDoc(voteSessionRef, {
+            votes: increment(1),
+          });
+          await updateDoc(doc(db, "users", userUID), {
+            voted: true,
+          });
+          window.alert("Du har röstat på " + (option1content))
+        }
+        else {
+          window.alert("Du har redan röstat!")
+        }
+      });
+
+      option2.addEventListener("click", async () => {
+        if (userData.voted === false) {
+          await updateDoc(voteSessionRef, {
+            option2result: increment(userData.voteValue),
+          });
+          await updateDoc(voteSessionRef, {
+            votes: increment(1),
+          });
+          await updateDoc(doc(db, "users", userUID), {
+            voted: true,
+          });
+          window.alert("Du har röstat på " + (option2content))
+        }
+        else {
+          window.alert("Du har redan röstat!")
+        }
+      });
+    </script>
+</body>
+</html>
+
+       

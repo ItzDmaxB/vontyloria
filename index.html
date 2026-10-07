@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+    <title>Vontyloria</title>
+</head>
+<body>
+
+    <nav>
+        <center>
+            <a href="/index.html">
+                <button class="nav-logo-button">
+                    <img src="Vontyloria full logo.png" class="nav-logo-img">
+                </button>
+            </a>
+        </center>
+    </nav>
+    
+    <div class="homepage">
+        <center>
+            <div class="val" id="val-box">
+                <h1>Vontylorias Riksval</h1>
+                <p id="senastenytt">Var med och rösta i Vontylorias Riksval om vem som ska leda staden härnäst.</p>
+                <a href="val.html">
+                    <button class="vote-btn">Rösta</button>
+                </a>
+            </div>
+            <div class="account-hero">
+                <div id="nav-auth">
+                    <!-- filled by auth.js -->
+                </div>
+            </div>
+        </center>
+    </div>
+    
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/auth.js"></script>
+    <script type="module">
+    import {
+      onAuthChange,
+      logoutUser,
+      getUserData,
+      getContentData,
+      hasSiteAccess
+    } from './js/auth.js';
+
+    const cData = await getContentData();
+
+    if (cData.aktiv == true) {
+        document.getElementById('val-box').style.display = 'flex';
+    };
+    </script>
+</body>
+</html>
