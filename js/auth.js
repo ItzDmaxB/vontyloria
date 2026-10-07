@@ -96,7 +96,7 @@ onAuthStateChanged(auth, async user => {
 
     container.innerHTML = `
       <p class="hero-login-text">Du är inte inloggad</p>
-      <a href="/login.html" class="nav-login-a">
+      <a href="./login.html" class="nav-login-a">
         <button class="nav-login-btn">Logga in</button>
       </a>`;
   }
