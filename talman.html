@@ -11,7 +11,7 @@
 <body>
     <nav>
         <center>
-            <a href="/index.html">
+            <a href="./index.html">
                 <button class="nav-logo-button">
                     <img src="Vontyloria full logo.png" class="nav-logo-img">
                 </button>
@@ -47,7 +47,7 @@
     onAuthChange(async user => {
       const data = await getUserData(user.uid);
       if (data.regering !== "talman") {
-        window.location.href = '/regering.html';
+        window.location.href = './regering.html';
         return;
       }
     });

@@ -12,7 +12,7 @@
 
   <nav>
         <center>
-            <a href="/index.html">
+            <a href="./index.html">
                 <button class="nav-logo-button">
                     <img src="Vontyloria full logo.png" class="nav-logo-img">
                 </button>
@@ -51,7 +51,7 @@
       const allowed = await hasSiteAccess(user.uid);
 
       if (allowed) {
-        window.location.href = '/regering.html';
+        window.location.href = '../regering.html';
       } else {
         await import('./js/auth.js').then(({ logoutUser }) => logoutUser());
 
@@ -82,7 +82,7 @@
           return;
         }
 
-        window.location.href = '/regering.html';
+        window.location.href = './regering.html';
 
       } catch (err) {
         errEl.textContent = 'Fel epost eller lösenord';

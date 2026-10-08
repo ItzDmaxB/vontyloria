@@ -86,7 +86,7 @@ onAuthStateChanged(auth, async user => {
 
     container.innerHTML = `
       <p style="font-size: 250%; font-family: Satoshi Black;">Välkommen</p>
-      <a href="/regering.html" class="nav-member-btn">
+      <a href="./regering.html" class="nav-member-btn">
         <p style="font-family: Satoshi Medium; font-size: 200%;">${username}</p>
         <img src="${imgSrc}" alt="Your Minecraft head" class="nav-mc-head" />
       </a>
